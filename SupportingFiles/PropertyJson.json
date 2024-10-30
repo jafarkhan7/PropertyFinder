@@ -1,0 +1,152 @@
+[
+
+    
+        {
+            "id" : 1, "images":[
+                {"id": 1,"name": "Ad1"},
+                {"id": 2,"name": "Ad2"},
+                {"id": 3,"name": "Ad3"},
+                {"id": 4,"name": "Ad1"},
+                {"id": 5,"name": "Ad2"},
+                {"id": 6,"name": "Ad3"}
+            ],
+            "occupationType" : "notReady",
+            "isVerified": true,
+            "isSuperAgent": false,
+            "isNew": true,
+            "agentImage": "https://example.com/agent1.jpg",
+            "isFavorited": false,
+            "propertyType": "Apartment",
+            "listedAgo": "2 days ago",
+            "locationLat": 37.7749,
+            "locationLong": -122.4194,
+            "bedRoomCount": 3,
+            "bathCount": 2,
+            "squareFeet": 1500.0,
+            "call": 545652705,
+            "message": 545652705
+        },
+        {
+            "id" : 2, "images":[
+                {"id": 1, "name": "Ad2"},
+                {"id": 2, "name": "Ad1"},
+                {"id": 3, "name": "Ad3"},
+                {"id": 4, "name": "Ad1"},
+                {"id": 5, "name": "Ad2"},
+                {"id": 6, "name": "Ad3"}
+            ],
+            "occupationType" : "notReady",
+            "isVerified": true,
+            "isSuperAgent": true,
+            "isNew": false,
+            "agentImage": "https://example.com/agent2.jpg",
+            "isFavorited": true,
+            "propertyType": "House",
+            "listedAgo": "1 week ago",
+            "locationLat": 34.0522,
+            "locationLong": -118.2437,
+            "bedRoomCount": 4,
+            "bathCount": 3,
+            "squareFeet": 2200.0,
+            "call": 545652706,
+            "message": 545652706
+        },
+        {
+            "id" : 3, "images":[
+                {"id": 1, "name": "Ad3"},
+                {"id": 2, "name": "Ad1"},
+                {"id": 3, "name": "Ad2"},
+                {"id": 4, "name": "Ad1"},
+                {"id": 5, "name": "Ad2"},
+                {"id": 6, "name": "Ad3"}
+            ], "occupationType" : "offPlan",
+            "isVerified": false,
+            "isSuperAgent": false,
+            "isNew": true,
+            "agentImage": "https://example.com/agent3.jpg",
+            "isFavorited": false,
+            "propertyType": "Condo",
+            "listedAgo": "3 days ago",
+            "locationLat": 40.7128,
+            "locationLong": -74.0060,
+            "bedRoomCount": 2,
+            "bathCount": 1,
+            "squareFeet": 950.0,
+            "call": 545652707,
+            "message": 545652707
+        },
+        {
+            "id" : 4, "images":[
+                {"id": 1,"name": "Ad1"},
+                {"id": 2,"name": "Ad2"},
+                {"id": 3,"name": "Ad3"},
+                {"id": 4,"name": "Ad1"},
+                {"id": 5,"name": "Ad2"},
+                {"id": 6,"name": "Ad3"}
+            ],
+            "occupationType" : "notReady",
+
+            "isVerified": true,
+            "isSuperAgent": false,
+            "isNew": true,
+            "agentImage": "https://example.com/agent1.jpg",
+            "isFavorited": false,
+            "propertyType": "Apartment",
+            "listedAgo": "2 days ago",
+            "locationLat": 37.7749,
+            "locationLong": -122.4194,
+            "bedRoomCount": 3,
+            "bathCount": 2,
+            "squareFeet": 1500.0,
+            "call": 545652705,
+            "message": 545652705
+        },
+        {
+            "id" : 5, "images":[
+                {"id": 1, "name": "Ad2"},
+                {"id": 2, "name": "Ad1"},
+                {"id": 3, "name": "Ad3"},
+                {"id": 4, "name": "Ad1"},
+                {"id": 5, "name": "Ad2"},
+                {"id": 6, "name": "Ad3"}
+            ], "occupationType" : "ready",
+            "isVerified": true,
+            "isSuperAgent": true,
+            "isNew": false,
+            "agentImage": "https://example.com/agent2.jpg",
+            "isFavorited": true,
+            "propertyType": "House",
+            "listedAgo": "1 week ago",
+            "locationLat": 34.0522,
+            "locationLong": -118.2437,
+            "bedRoomCount": 4,
+            "bathCount": 3,
+            "squareFeet": 2200.0,
+            "call": 545652706,
+            "message": 545652706
+        },
+        {
+            "id" : 6, "images":[
+                {"id": 1, "name": "Ad3"},
+                {"id": 2, "name": "Ad1"},
+                {"id": 3, "name": "Ad2"},
+                {"id": 4, "name": "Ad1"},
+                {"id": 5, "name": "Ad2"},
+                {"id": 6, "name": "Ad3"}
+            ], "occupationType" : "notReady",
+            "isVerified": false,
+            "isSuperAgent": false,
+            "isNew": true,
+            "agentImage": "https://example.com/agent3.jpg",
+            "isFavorited": false,
+            "propertyType": "Condo",
+            "listedAgo": "3 days ago",
+            "locationLat": 40.7128,
+            "locationLong": -74.0060,
+            "bedRoomCount": 2,
+            "bathCount": 1,
+            "squareFeet": 950.0,
+            "call": 545652707,
+            "message": 545652707
+        }
+]
