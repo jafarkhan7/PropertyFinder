@@ -9,7 +9,41 @@ import SwiftUI
 
 struct ContactPropertyView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack() {
+            
+            Button {
+                
+            } label: {
+                HStack(alignment: .center, spacing: 10.0, content: {
+                    CustomTextView(imageName: "phone.fill", text: "Call", color: Color.superAgent)
+                        .customFont(size: 12, weight: .semibold)
+                        .lineLimit(1)
+                    
+                }).padding(0)
+                    .frame(maxWidth: .infinity)
+            }.padding()
+                .background(Color.lightGray)
+                .cornerRadius(10)
+                .frame(maxWidth: .infinity)
+            
+            Button {
+                
+            } label: {
+                HStack(alignment: .center, spacing: 10.0, content: {
+                    CustomTextView(imageName: "message.fill", text: "WhatsApp", color: Color.superAgent)
+                        .lineLimit(1)
+                        .customFont(size: 12, weight: .semibold)
+
+                    
+                }).padding(0)
+                    .frame(maxWidth: .infinity)
+                
+                
+            }.padding()
+                .background(Color.lightGray)
+                .cornerRadius(10)
+                .frame(maxWidth: .infinity)
+        }.frame(maxWidth: .infinity).padding(10)
     }
 }
 

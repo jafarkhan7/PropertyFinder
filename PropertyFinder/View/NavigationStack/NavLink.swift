@@ -17,15 +17,15 @@ struct NavLink<Desination: View, Label: View>: View {
     }
     
     var body: some View {
-        NavigationLink {
-            NavBarConainer() {
-                destination
-                    .navigationBarHidden(true)
+            NavigationLink {
+                NavBarConainer() {
+                    destination
+                        .navigationBarHidden(true)
+                }
+            } label: {
+                label
             }
-        } label: {
-            label
-        }
-       
+            
     }
 }
 

@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct PropertyFinderApp: App {
+    init() {
+    }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            
+            GuestDashboard(guestDashboardVm: GuestDashboardViewModel())
         }
     }
 }

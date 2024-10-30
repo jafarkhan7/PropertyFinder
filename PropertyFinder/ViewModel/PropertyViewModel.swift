@@ -9,10 +9,9 @@ import Foundation
 import SwiftUI
 import Combine
 
-enum PropertyType: String {
+enum OccupationType: String {
     case offPlan
     case ready
-    
 }
 
 class PropertyViewModel: ObservableObject {
@@ -20,13 +19,20 @@ class PropertyViewModel: ObservableObject {
     @Published var propertiesFiltered: [Property] = [Property]()
     @Published var isLoading: Bool = false
     @Published var error: String?
-    @Published var propertyType: PropertyType?
-    var cancellab =  Set<AnyCancellable>()
+    @Published var occupationType: OccupationType?
+    private var cancellables =  Set<AnyCancellable>()
     var newPropertyCount: Int {
        return propertiesFiltered.filter { $0.isNew == true }.count
     }
 
-    init() {
+    init(guestDashboardViewModel: GuestDashboardViewModel) {
+        guestDashboardViewModel.$searchText
+            .combineLatest(guestDashboardViewModel.$selectedFilters)
+            .filter { filter in guestDashboardViewModel.shouldFilter == true }
+            .sink { [weak self] searchText, selectedFilters in
+                self?.getFilteredPropertiesWithFilter(searchText: searchText, filters: selectedFilters)
+                guestDashboardViewModel.shouldFilter = false
+            }.store(in: &cancellables)
         fetchProperties()
     }
     
@@ -50,39 +56,55 @@ class PropertyViewModel: ObservableObject {
                 self?.properties = recievedValue
                 self?.propertiesFiltered = recievedValue
 
-            }.store(in: &cancellab)
+            }.store(in: &cancellables)
         
         isLoading = false
     }
     
-    func getFilteredProperties(type: PropertyType?) {
-        propertyType = type
+    func getFilteredProperties(type: OccupationType?) {
+        occupationType = type
         
-        if let propertyType = type {
-            propertiesFiltered = properties.filter { $0.occupationType == propertyType.rawValue }
+        if let occupationType = type {
+            propertiesFiltered = properties.filter { $0.occupationType == occupationType.rawValue }
         }
         else {
             propertiesFiltered = properties
         }
-        
     }
     
+    func getFilteredPropertiesWithFilter(searchText: String, filters: Set<String>) {
+        if searchText.isEmpty {
+            getFilteredProperties(type: occupationType)
+        }else {
+            propertiesFiltered = properties.filter { $0.propertyType.contains(searchText) }
+        }
+    }
     
     func fetchMore() {
         isLoading = true
         guard let property = properties.randomElement() else {
+            isLoading = false
             return
         }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) { [weak self] in
-            guard let welf = self else { return }
-            let propertiesNew = (0..<6).map { index in
-                let propertyNew = Property(id: (welf.properties.count) + (index + 1), images: property.images.shuffled(), isVerified: property.isVerified, isSuperAgent: property.isSuperAgent, isNew: property.isNew, agentImage: property.agentImage, isFavorited: property.isFavorited, propertyType: property.propertyType, listedAgo: property.listedAgo, locationLat: property.locationLat, locationLong: property.locationLong, bedRoomCount: property.bedRoomCount, bathCount: property.bathCount, squareFeet: property.squareFeet, call: property.call, message: property.message, occupationType: property.occupationType)
-                return propertyNew
+        
+        let propertyTypes: [Property] = (0..<6).map { index in
+            let propertyNew = Property(id: (properties.count) + (index + 1), images: property.images.shuffled(), isVerified: property.isVerified, isSuperAgent: property.isSuperAgent, isNew: property.isNew, agentImage: property.agentImage, isFavorited: property.isFavorited, propertyType: property.propertyType, listedAgo: property.listedAgo, locationLat: property.locationLat, locationLong: property.locationLong, bedRoomCount: property.bedRoomCount, bathCount: property.bathCount, squareFeet: property.squareFeet, call: property.call, message: property.message, occupationType: property.occupationType)
+            return propertyNew
         }
-            welf.properties.append(contentsOf: propertiesNew)
-            welf.getFilteredProperties(type: welf.propertyType)
-        }
-            
+        propertyTypes.publisher
+            .delay(for: .seconds(2), scheduler: RunLoop.main)
+            .collect()
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self = self else { return }
+                self.isLoading = false
+                
+            }, receiveValue: { [weak self] result in
+                guard let self = self else { return }
+                self.properties.append(contentsOf: result)
+                self.getFilteredProperties(type: self.occupationType)
+            })
+            .store(in: &cancellables)
+        
     }
     
     func isFavorited(item: Property) -> Bool {

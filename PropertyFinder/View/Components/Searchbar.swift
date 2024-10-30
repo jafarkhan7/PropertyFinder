@@ -9,13 +9,16 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var searchText: String
+    var onEditingEnd: VoidCompletion
     var body: some View {
         HStack {
             HStack {
                 Spacer(minLength: 20)
                 Image(systemName: "magnifyingglass")
                 Spacer(minLength: 20)
-                TextField("City, area or building", text: $searchText)
+                TextField("City, area or building", text: $searchText, onCommit: {
+                    onEditingEnd()
+                })
                     .frame(height: 50)
                 
             }

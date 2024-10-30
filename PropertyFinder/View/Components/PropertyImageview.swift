@@ -7,12 +7,24 @@
 
 import SwiftUI
 
-struct PropertyImageview: View {
+struct PropertyImageView: View {
+    let propertyImages: [PropertyImage]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack(alignment: .bottomLeading, content: {
+            TabView {
+                ForEach(propertyImages) { image in
+                    Image(image.name)
+                        .resizable()
+                        .scaledToFill()
+                    
+                }
+            }.tabViewStyle(PageTabViewStyle())
+            
+            AgentImageCircleView(imageName: "Ad2")
+            
+        })
     }
 }
-
 #Preview {
-    PropertyImageview()
+    PropertyImageView(propertyImages: [PropertyImage]())
 }

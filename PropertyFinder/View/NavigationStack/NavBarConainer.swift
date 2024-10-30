@@ -38,12 +38,11 @@ struct NavBarConainer<Content: View>: View {
                     })
                 
                 NavBarView(showBackButton: showBackButton, title: title, customView: customView)
-                    .customTransition(opacity: 0)
+                    .customTransition(opacity: 0, duration: 0.1)
                 
             }
            
-        }
-       
+        }.background(Color.clear)
     }
 }
 

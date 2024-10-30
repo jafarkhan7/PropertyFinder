@@ -10,12 +10,10 @@ import SwiftUI
 struct HeaderView: View {
     var segmentItem = ["Buy", "Property type", "Price", "Beds & Baths", "Amenities"]
     @Binding var searchText: String
-    var onSubmit:(String)->Void
+    var onSubmit:VoidCompletion
     var body: some View {
         VStack() {
-            SearchBar(searchText: $searchText).onSubmit {
-                onSubmit(searchText)
-            }
+            SearchBar(searchText: $searchText, onEditingEnd: onSubmit)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(segmentItem, id: \.self) { item in
@@ -29,7 +27,7 @@ struct HeaderView: View {
 }
 
 #Preview {
-    HeaderView(searchText: .constant("")) { _ in
+    HeaderView(searchText: .constant("")) { 
         
     }
 }

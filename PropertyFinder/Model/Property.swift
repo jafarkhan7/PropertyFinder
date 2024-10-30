@@ -7,7 +7,20 @@
 
 import Foundation
 
-struct Property: Codable, Identifiable {
+struct Property: Codable, Identifiable, Hashable, Equatable {
+    static func == (lhs: Property, rhs: Property) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+           hasher.combine(id)
+           hasher.combine(isVerified)
+           hasher.combine(isNew)
+           hasher.combine(isSuperAgent)
+           // Include other properties as necessary
+       }
+    
+    
     let id: Int
     let images: [PropertyImage]
     let isVerified: Bool
@@ -30,6 +43,9 @@ struct Property: Codable, Identifiable {
 // MARK: - Image
 
 struct PropertyImage: Codable, Identifiable {
+    static func == (lhs: PropertyImage, rhs: PropertyImage) -> Bool {
+        lhs.id == rhs.id
+    }
     let id: Int
     let name: String
 }

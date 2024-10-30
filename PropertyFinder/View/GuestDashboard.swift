@@ -9,28 +9,28 @@ import SwiftUI
 
 struct GuestDashboard: View {
     
-    @State var searchText: String = ""
-    @State var selection =  TabBarItem.search
-
+@StateObject var guestDashboardVm = GuestDashboardViewModel()
+    
     var body: some View {
-        NavigationView {
+        NavView {
             ZStack {
-                CustomTabBarContainerView(selection: $selection) {
-                    
-                    searchContent
-                        .tabBarItem(tab: .search, selection: $selection)
-                    
-                    searchContent
-                   .tabBarItem(tab: .explore, selection: $selection)
-                    
-                    searchContent
-                   .tabBarItem(tab: .favorites, selection: $selection)
-                    
-                    searchContent
-                   .tabBarItem(tab: .profile, selection: $selection)
+                    CustomTabBarContainerView(selection: $guestDashboardVm.selection) {
+                        
+                        searchContent
+                            .tabBarItem(tab: .search, selection: $guestDashboardVm.selection)
+                        
+                        searchContent
+                       .tabBarItem(tab: .explore, selection: $guestDashboardVm.selection)
+                        
+                        searchContent
+                       .tabBarItem(tab: .favorites, selection: $guestDashboardVm.selection)
+                        
+                        searchContent
+                       .tabBarItem(tab: .profile, selection: $guestDashboardVm.selection)
 
-                }
+                    }
             }
+            .setNavigationBarBackButtonHidden(true)
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
     }
@@ -39,20 +39,18 @@ struct GuestDashboard: View {
 extension GuestDashboard {
     
     private var searchContent: some View {
-        GeometryReader { geometry in
             VStack(spacing: 0) {
-                
-                HeaderView(searchText: $searchText, onSubmit: { searchText in
-                    self.searchText = searchText
+                HeaderView(searchText: $guestDashboardVm.searchText, onSubmit: {
+                    guestDashboardVm.editingEnded.send()
                 }).customFont(size: 15)
-                .padding(.top, geometry.safeAreaInsets.top)
+                .padding(.top)
                 Spacer()
                 
-                PropertyListView().padding(.bottom, 50)
+                PropertyListView(viewModel: guestDashboardVm.propertyViewModel).padding(.bottom, 50)
             }
             .edgesIgnoringSafeArea(.all)
         }
-    }
+    
 }
 
 #Preview {

@@ -1,3 +1,12 @@
+//
+//  MenuDropDown.swift
+//  PropertyFinder
+//
+//  Created by Jafar on 30/10/2024.
+//
+
+import SwiftUI
+
 struct MenuDropDown<Content: View>: View {
     let menuItem: [String]
     let labelContent: Content
@@ -28,8 +37,6 @@ struct MenuDropDown<Content: View>: View {
             
         }, label: {
             labelContent
-        })
-
-        
+        })        
     }
 }

@@ -27,10 +27,21 @@ struct ButtonStyleConfig: ButtonStyle {
     }
 }
 
+typealias VoidCompletion = (()->Void)
+
 extension View {
     func withPressableStyle(opacity: CGFloat = 0.9, scale: CGFloat = 0.9) -> some View {
         buttonStyle(ButtonStyleConfig(opacity: opacity, scale: scale))
         
+    }
+}
+
+extension AnyTransition {
+    static var modalPush: AnyTransition {
+        .asymmetric(
+            insertion: .scale(scale: 1.1).combined(with: .opacity),
+            removal: .identity
+        )
     }
 }
 
@@ -64,8 +75,7 @@ extension Color {
     static var lightGray: Color {
         Color(hex: "F7F6FA")
     }
-    //    let myColor: Color = #colorLiteral(red: 0.3403233886, green: 0.2719218433, blue: 0.6248556972, alpha: 1)
-    
+
     
     init(hex: String) {
         let r, g, b: Double
@@ -120,46 +130,51 @@ struct CustomFontViewModifier: ViewModifier {
     }
 }
 
+struct ToggleButtonViewModifier: ViewModifier {
+    
+   @State var isEnabled: Bool = true
+    var selectedImageColor = Color.red
+    var unselectedImageColor = Color.white
+    
+    func body(content: Content) -> some View {
+            content
+            .foregroundColor(isEnabled ? selectedImageColor : unselectedImageColor)
+    }
+}
+
 
 extension View {
     func customFont(size: CGFloat, weight: Font.Weight? = nil) -> some View {
         modifier(CustomFontViewModifier(size: size, weight: weight))
     }
+    
+    func customToggle(isEnabled: Bool, selectedImageColor: Color = Color.red, unselectedImageColor: Color = Color.white) -> some View{
+        modifier(ToggleButtonViewModifier(isEnabled: isEnabled, selectedImageColor: selectedImageColor, unselectedImageColor: unselectedImageColor))
+    }
 }
 
-
-struct MenuDropDown<Content: View>: View {
-    let menuItem: [String]
-    let labelContent: Content
-    @Binding var selectedIndex: Int
-
-    init(menuItem: [String], selectedIndex: Binding<Int>, @ViewBuilder labelContent: () -> Content) {
-        self.menuItem = menuItem
-        self._selectedIndex = selectedIndex
-        self.labelContent = labelContent()
-    }
+// Custom transition modifier
+struct CustomTransitionModifier: ViewModifier {
+    @State var opacity: Double
+    @State var duration: Double
     
-    var body: some View {
-
-        Menu(content: {
-            ForEach(menuItem.indices, id: \.self) { index in
-                Button(action: {
-                    selectedIndex = index
-                }) {
-                    HStack {
-                        Text(menuItem[index])
-                        if selectedIndex == index {
-                            Image(systemName: "checkmark") // Checkmark icon
-                                .foregroundColor(.blue) // Change color if selected
-                        }
+    @ViewBuilder func body(content: Content) -> some View {
+        content
+            .opacity(opacity)
+            .transition (AnyTransition.scale.animation(.bouncy))
+            .onAppear(perform: {
+                withAnimation {
+                    withAnimation(.easeIn(duration: duration)) {
+                       opacity = 1
                     }
                 }
-            }
-            
-        }, label: {
-            labelContent
-        })
+            })
+     }
+    
+}
 
-        
+extension View {
+    func customTransition(opacity: Double, duration: Double = 0.5) -> some View {
+        modifier(CustomTransitionModifier(opacity: opacity, duration: duration))
     }
 }

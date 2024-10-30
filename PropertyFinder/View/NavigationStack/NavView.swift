@@ -24,19 +24,5 @@ struct NavView<Content: View>: View {
             .navigationBarHidden(true)
             .navigationViewStyle(StackNavigationViewStyle())
         }
-        
-
     }
 }
-
-//#Preview {
-//    NavView() {
-//        NavigationStack {
-//            NavBarConainer {
-//                Color.red
-//            }
-//
-//        }
-//    }
-//}
-
